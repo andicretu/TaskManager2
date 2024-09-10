@@ -24,6 +24,7 @@ public class WebSecurityConfig {
     public WebSecurityConfig(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+    
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -43,6 +44,7 @@ public class WebSecurityConfig {
                 .logout((logout) -> logout.permitAll());
         return http.build();
     }
+    
     @Bean
     public UserDetailsService userDetailsService() {
         return email -> {
