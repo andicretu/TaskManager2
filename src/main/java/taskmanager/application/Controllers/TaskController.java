@@ -20,6 +20,7 @@ public class TaskController {
         this.userRepository = userRepository;
         this.taskRepository = taskRepository;
     }
+    
     @GetMapping("/taskManager/createTask")
     public String showCreateTaskForm(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -29,6 +30,7 @@ public class TaskController {
         model.addAttribute("userModel", userModel);
         return "taskManagerCreateTask";
     }
+    
     @PostMapping("/createTask")
     public String createTask(@ModelAttribute("taskModel") TaskModel taskModel, @RequestParam("userEmail") String userEmail, Model model) {
         System.out.println("Fetching user with email: " + userEmail);
@@ -41,6 +43,7 @@ public class TaskController {
         taskRepository.save(taskModel);
         return "redirect:/taskManager/showUser/" + userModel.getEmail();
     }
+    
     @GetMapping("/taskManager/show-task/{id}")
     public String showTask(@PathVariable("id") Long id, Model model) {
         TaskModel taskModel = taskRepository.findById(id).orElse(null);
@@ -60,6 +63,7 @@ public class TaskController {
         taskRepository.deleteById(id);
         return "redirect:/taskManager/showUser/" + userModel.getEmail();
     }
+    
     @GetMapping("/taskManager/edit-task/{id}")
     public String showEditTaskForm(@PathVariable("id") Long id, Model model) {
         TaskModel taskModel = taskRepository.findById(id).orElse(null);
@@ -69,6 +73,7 @@ public class TaskController {
         model.addAttribute("taskModel", taskModel);
         return "taskManagerEditTask";
     }
+    
     @PostMapping("/taskManager/edit-task/{id}")
     public String updateTask(@PathVariable("id") Long id, @ModelAttribute TaskModel taskModel) {
         TaskModel existingTask = taskRepository.findById(id).orElse(null);
